@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import Cocoa
 
 class Movie {
     var title: String?
     var genre: String?
-    var artworkPath: String?
+    var artwork: NSImage?
     var year: NSNumber?
     var longDesc: String?
     var storeDesc: String?

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Cocoa
 
 let consoleIO = ConsoleIO()
 var sema = DispatchSemaphore(value: 0)
@@ -23,17 +24,22 @@ class Search {
     let urlOptionsPage = "&page=1"
     let urlOptionsAdult = "&include_adult=false"
     
+    let basePosterUrl = "https://image.tmdb.org/t/p/original"
+    
     
     func movie(withTitle title: String, andYear year: String) -> Movie? {
         
         var movie = Movie(withYear: NSNumber(value:Int(year)!))
         
-        if let movieId = self.searchForMovieId(withTitle: title, andYear: year) {
-            let movieDetails = self.searchForMovieDetails(withId: movieId)
-            consoleIO.writeMessage("Movie Details \(movieDetails!["poster_path"])")
+        if let movieId = self.searchForMovieId(withTitle: title, andYear: year),
+            let movieDetails = self.getMovieDetails(withId: movieId),
+            let posterPath = movieDetails["poster_path"] as? String,
+            let moviePoster = self.getMoviePoster(fromPath: posterPath) {
+            
+            movie.artwork = moviePoster
+            
         }
         
-        // add details from movieDetails to Movie
         
         return movie
     }
@@ -41,7 +47,7 @@ class Search {
     func searchForMovieId(withTitle title: String, andYear year: String) -> Int? {
         var movieId : Int?
         
-        let initialUrlString = self.buildUrlString(forType: "search", withId: nil)
+        let initialUrlString = self.buildUrlString(forType: "search", withId: nil, orPosterPath: nil)
         let encodedQueryString = title.addingPercentEncoding(withAllowedCharacters:.urlPasswordAllowed)
         
         if let queryString = encodedQueryString,
@@ -85,10 +91,8 @@ class Search {
         return movieId
     }
     
-    func searchForMovieDetails(withId id: Int) -> [String : Any]? {
+    func getMovieDetails(withId id: Int) -> [String : Any]? {
         var movieDetails : [String : Any]?
-        
-        consoleIO.writeMessage("Movie ID \(String(id))")
         
         let requestUrlString = self.buildMovieDetailsUrlString(withId: id)
         
@@ -104,7 +108,6 @@ class Search {
                             consoleIO.writeMessage("Parsing details...")
                             if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : Any] {
                                 consoleIO.writeMessage("Movie details were parsed successfully.")
-                                consoleIO.writeMessage("Movie details \(json)")
                                 movieDetails = json
                             }
                         } catch {
@@ -121,11 +124,28 @@ class Search {
         return movieDetails
     }
     
-    private func buildUrlString(forType type:String, withId id:Int?) -> String {
+    func getMoviePoster(fromPath path: String) -> NSImage? {
+        var poster: NSImage?
+        
+        consoleIO.writeMessage("Getting movie poster... ")
+        
+        let posterUrlString = self.buildUrlString(forType: "poster", withId: nil, orPosterPath: path)
+        
+        if let requestUrl = URL(string: posterUrlString) {
+            if let image = NSImage.init(contentsOf: requestUrl) {
+                poster = image
+            }
+        }
+        return poster
+    }
+    
+    private func buildUrlString(forType type:String, withId id:Int?, orPosterPath path: String?) -> String {
         if id != nil && type == "details" {
             return self.buildMovieDetailsUrlString(withId: id!)
         } else if type == "search" {
             return self.buildMovieSearchUrlString()
+        } else if path != nil && type == "poster" {
+            return self.buildPosterUrlString(withPath: path!)
         } else {
             return baseURL
         }
@@ -137,5 +157,9 @@ class Search {
     
     private func buildMovieSearchUrlString() -> String {
         return baseURL + searchURL + apiKey + urlOptionsLanguage + urlOptionsPage + urlOptionsAdult
+    }
+    
+    private func buildPosterUrlString(withPath path: String) -> String {
+        return basePosterUrl + path
     }
 }
