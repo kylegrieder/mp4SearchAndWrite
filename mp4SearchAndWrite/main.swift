@@ -9,7 +9,6 @@
 import Foundation
 
 let mp4SearchAndWrite = Mp4SearchAndWrite()
-let search = Search()
 
 if (CommandLine.argc < 2) {
     //TODO: Handle Static mode
@@ -18,7 +17,7 @@ if (CommandLine.argc < 2) {
     let terms = mp4SearchAndWrite.getSearchTerms()
     
     if let title = terms["title"], let year = terms["year"] {
-        search.movie(withTitle: title, andYear: year)
+        let movie = Movie(withTitle: title, andYear: year)
     }
     
 }

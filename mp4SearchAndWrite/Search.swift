@@ -26,24 +26,6 @@ class Search {
     
     let basePosterUrl = "https://image.tmdb.org/t/p/original"
     
-    
-    func movie(withTitle title: String, andYear year: String) -> Movie? {
-        
-        var movie = Movie(withYear: NSNumber(value:Int(year)!))
-        
-        if let movieId = self.searchForMovieId(withTitle: title, andYear: year),
-            let movieDetails = self.getMovieDetails(withId: movieId),
-            let posterPath = movieDetails["poster_path"] as? String,
-            let moviePoster = self.getMoviePoster(fromPath: posterPath) {
-            
-            movie.artwork = moviePoster
-            
-        }
-        
-        
-        return movie
-    }
-    
     func searchForMovieId(withTitle title: String, andYear year: String) -> Int? {
         var movieId : Int?
         
