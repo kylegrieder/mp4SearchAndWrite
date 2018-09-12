@@ -134,7 +134,7 @@ class Search {
     }
     
     private func buildMovieDetailsUrlString(withId id: Int) -> String {
-        return baseURL + detailsURL + String(id) + apiKey + urlOptionsLanguage
+        return baseURL + detailsURL + String(id) + apiKey + urlOptionsLanguage + "&append_to_response=release_dates"
     }
     
     private func buildMovieSearchUrlString() -> String {
