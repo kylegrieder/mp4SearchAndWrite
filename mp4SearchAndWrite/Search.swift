@@ -35,27 +35,27 @@ class Search {
         if let queryString = encodedQueryString,
             let requestUrl = URL(string: initialUrlString + "&year=" + year + "&query=" + queryString) {
             if !queryString.isEmpty {
-                consoleIO.writeMessage("starting search...")
+                consoleIO.writeMessage("Starting search...")
                 let session = URLSession.shared.dataTask(with: requestUrl) { (movieData, response, error) in
                     if error != nil {
-                        consoleIO.writeMessage("Error: Your search was unable to be processed. Try again.")
+                        consoleIO.writeMessage(" Error: Your search was unable to be processed. Try again.")
                         consoleIO.writeMessage("Error: URLSession dataTask returned an error: \(String(describing: error))", to: .error)
                     } else {
-                        consoleIO.writeMessage("Your search was successful!")
+                        consoleIO.writeMessage(" Your search was successful!")
                         if let data = movieData {
                             do {
-                                consoleIO.writeMessage("Parsing search results...")
+                                consoleIO.writeMessage("  Parsing search results...")
                                 if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : Any] {
-                                    consoleIO.writeMessage("Search results were parsed successfully.")
+                                    consoleIO.writeMessage("   Search results were parsed successfully.")
                                     let results = json["results"] as! [[String : Any]?]
                                     if let firstResult = results[0], let id = firstResult["id"] as? Int {
                                         movieId = id
                                     } else {
-                                        consoleIO.writeMessage("Error: Your search did not return any results.\n Make sure the year and title parameters are accurate.")
+                                        consoleIO.writeMessage("   Error: Your search did not return any results.\n Make sure the year and title parameters are accurate.")
                                     }
                                 }
                             } catch {
-                                consoleIO.writeMessage("Error: Search results were unable to be parsed successfully. \n Please Try again")
+                                consoleIO.writeMessage("  Error: Search results were unable to be parsed successfully. \n Please Try again")
                             }
                         }
                     }
@@ -77,23 +77,23 @@ class Search {
         var movieDetails : [String : Any]?
         
         let requestUrlString = self.buildMovieDetailsUrlString(withId: id)
-        
+        consoleIO.writeMessage("Getting Movie details...")
         if let requestUrl = URL(string: requestUrlString) {
             let session = URLSession.shared.dataTask(with: requestUrl) { (movieDetailsData, response, error) in
                 if error != nil {
-                    consoleIO.writeMessage("Error: Movie Details weren't able to be retrieved")
+                    consoleIO.writeMessage(" Error: Movie Details weren't able to be retrieved")
                     consoleIO.writeMessage("Error: URLSession dataTask returned an error: \(String(describing: error))", to: .error)
                 } else {
-                    consoleIO.writeMessage("Movie details data was successfully retrieved!")
+                    consoleIO.writeMessage(" Movie details data was successfully retrieved!")
                     if let data = movieDetailsData {
                         do {
-                            consoleIO.writeMessage("Parsing details...")
+                            consoleIO.writeMessage("  Parsing details...")
                             if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : Any] {
-                                consoleIO.writeMessage("Movie details were parsed successfully.")
+                                consoleIO.writeMessage("   Movie details were parsed successfully.")
                                 movieDetails = json
                             }
                         } catch {
-                            consoleIO.writeMessage("Error: Movie details were unable to be parsed successfully. \n Please Try again")
+                            consoleIO.writeMessage("   Error: Movie details were unable to be parsed successfully. \n Please Try again")
                         }
                     }
                 }
@@ -115,6 +115,7 @@ class Search {
         
         if let requestUrl = URL(string: posterUrlString) {
             if let image = NSImage.init(contentsOf: requestUrl) {
+                consoleIO.writeMessage(" Poster was successfully retrieved!")
                 poster = image
             }
         }
