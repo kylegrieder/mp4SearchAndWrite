@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		800C538E214A215400001EC6 /* mp4Write.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 800C538D214A081A00001EC6 /* mp4Write.sh */; };
 		80C74CDA213F31F700D5315A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C74CD9213F31F700D5315A /* main.swift */; };
 		80C74CE1213F31FD00D5315A /* ConsoleIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C74CE0213F31FD00D5315A /* ConsoleIO.swift */; };
 		80C74CE3213F322F00D5315A /* Mp4SearchAndWrite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C74CE2213F322F00D5315A /* Mp4SearchAndWrite.swift */; };
@@ -17,12 +18,13 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		80C74CD4213F31F700D5315A /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = scripts;
-			dstSubfolderSpec = 16;
+			buildActionMask = 12;
+			dstPath = /usr/local/bin;
+			dstSubfolderSpec = 0;
 			files = (
+				800C538E214A215400001EC6 /* mp4Write.sh in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -263,6 +265,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4GG4434UG2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -273,6 +276,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4GG4434UG2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
