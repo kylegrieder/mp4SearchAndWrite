@@ -63,15 +63,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-y &quot;2012&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-p &quot;/Users/kylegrieder/Downloads/A Bug&apos;s Life.mp4&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-t &quot;The Avengers&quot;"
+            argument = "-p &quot;/Volumes/4TB Media/New/1b_Waiting for Meta Data/A Bug&apos;s Life (1998).mp4&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
