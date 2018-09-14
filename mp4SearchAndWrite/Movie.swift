@@ -79,8 +79,4 @@ class Movie {
             //
         }
     }
-    
-    func savePosterImage(fromData data:Data?, toPath path: String) {
-        let _ = FileManager.default.createFile(atPath: path, contents: data, attributes: nil)
-    }
 }

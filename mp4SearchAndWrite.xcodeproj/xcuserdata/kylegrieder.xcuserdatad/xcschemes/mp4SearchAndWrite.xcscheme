@@ -67,7 +67,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-p &quot;/absolute/path/to/file.mp4&quot;"
+            argument = "-p &quot;/Users/kylegrieder/Downloads/A Bug&apos;s Life.mp4&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

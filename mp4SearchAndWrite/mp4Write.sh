@@ -1,17 +1,7 @@
 #!/bin/bash
 
-# // path, title, genre, releaseDate, longDesc, storeDesc, mpaaCert, stik
+# // 1:filePath, 2:artworkPath, 3:title, 4:genre, 5:releaseDate, 6:longDesc, 7:storeDesc, 8:mpaaCert, 9:stik
 
+/usr/local/bin/atomicparsley "${1}" -W --title "${3}" --artwork "${2}" --genre "${4}" --year "${5}" --longdesc "${6}" --storedesc "${7}" --description "${7}" --contentRating "${8}" --stik "${9}"
+rm -rf "${2}"
 
-
-echo ${1}
-echo ${2}
-echo ${3}
-echo ${4}
-echo ${5}
-echo ${6}
-echo ${7}
-
-#/usr/local/bin/atomicparsley "/Users/kylegrieder/Downloads/A Bug's Life.mp4" --title "${1}"
-
-#/usr/local/bin/atomicparsley "/Users/kylegrieder/Downloads/A Bug's Life.mp4" -t

@@ -19,9 +19,11 @@ func main() {
         let terms = mp4SearchAndWrite.getTerms()
         
         if let title = terms["title"], let year = terms["year"], let filePath = terms["path"] {
+            
             let movie = Movie(withTitle: title, andYear: year)
             
-            // TODO: handle movie.artworkData
+            let artworkPath = "/" + filePath.split(separator: "/").dropLast().joined(separator: "/") + "/poster-" + title + ".jpg"
+            helpers.savePosterImage(fromData: movie.artworkData, toPath: artworkPath)
             
             if let title = movie.title,
                 let genre = movie.genre,
@@ -30,7 +32,7 @@ func main() {
                 let storeDesc = movie.storeDesc,
                 let mpaaCert = movie.mpaaCertification {
                 
-                let arguments = [filePath, title, genre, releaseDate, longDesc, storeDesc, mpaaCert, movie.stik]
+                let arguments = [filePath, artworkPath, title, genre, releaseDate, longDesc, storeDesc, mpaaCert, movie.stik]
                 helpers.mp4WriteScript(withArguments: arguments)
             }
         }
