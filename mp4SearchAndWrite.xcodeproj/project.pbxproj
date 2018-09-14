@@ -13,6 +13,7 @@
 		80C74CE3213F322F00D5315A /* Mp4SearchAndWrite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C74CE2213F322F00D5315A /* Mp4SearchAndWrite.swift */; };
 		80C74CE5213F36C100D5315A /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C74CE4213F36C100D5315A /* Search.swift */; };
 		80C74CE7213F82C200D5315A /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C74CE6213F82C200D5315A /* Movie.swift */; };
+		80FEA80B214B03BE00816107 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FEA80A214B03BE00816107 /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,6 +37,7 @@
 		80C74CE2213F322F00D5315A /* Mp4SearchAndWrite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mp4SearchAndWrite.swift; sourceTree = "<group>"; };
 		80C74CE4213F36C100D5315A /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		80C74CE6213F82C200D5315A /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		80FEA80A214B03BE00816107 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				80C74CE0213F31FD00D5315A /* ConsoleIO.swift */,
 				80C74CE2213F322F00D5315A /* Mp4SearchAndWrite.swift */,
 				80C74CD9213F31F700D5315A /* main.swift */,
+				80FEA80A214B03BE00816107 /* Helpers.swift */,
 				80C74CE4213F36C100D5315A /* Search.swift */,
 				80C74CE6213F82C200D5315A /* Movie.swift */,
 			);
@@ -136,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80C74CDA213F31F700D5315A /* main.swift in Sources */,
+				80FEA80B214B03BE00816107 /* Helpers.swift in Sources */,
 				80C74CE5213F36C100D5315A /* Search.swift in Sources */,
 				80C74CE1213F31FD00D5315A /* ConsoleIO.swift in Sources */,
 				80C74CE3213F322F00D5315A /* Mp4SearchAndWrite.swift in Sources */,

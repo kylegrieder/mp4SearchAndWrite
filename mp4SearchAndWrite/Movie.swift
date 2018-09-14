@@ -14,7 +14,7 @@ let search = Search()
 class Movie {
     var title: String?   // implemented
     var genre: String? // implemented
-    var artwork: NSImage? // implemented
+    var artworkData: Data? // implemented
     var releaseDate: String? // implemented
     var longDesc: String? // implemented
     var storeDesc: String? // implemented
@@ -28,8 +28,8 @@ class Movie {
             let movieDetails = search.getMovieDetails(withId: movieId),
             let posterPath = movieDetails["poster_path"] as? String,
             // Artwork Logic
-            let moviePoster = search.getMoviePoster(fromPath: posterPath) {
-            self.artwork = moviePoster
+            let moviePosterData = search.getMoviePosterData(fromPath: posterPath) {
+            self.artworkData = moviePosterData
             // Details logic
             consoleIO.writeMessage("Setting movie details variables...")
             if let movieReleaseDate = movieDetails["release_date"] as? String,
@@ -63,7 +63,6 @@ class Movie {
                 }
             }
             // MPAA Certification logic
-            var mpaaCert: String?
             if let releaseDateObject = movieDetails["release_dates"] as? [String : Any],
                 let releaseResultsArr = releaseDateObject["results"] as? [Any] {
                 let _ = releaseResultsArr.map {(result) in
@@ -79,5 +78,9 @@ class Movie {
             }
             //
         }
+    }
+    
+    func savePosterImage(fromData data:Data?, toPath path: String) {
+        let _ = FileManager.default.createFile(atPath: path, contents: data, attributes: nil)
     }
 }

@@ -12,6 +12,7 @@ enum OptionType: String {
     case title = "t"
     case year = "y"
     case help = "h"
+    case path = "p"
     case unknown
     
     init(value: String) {
@@ -19,6 +20,7 @@ enum OptionType: String {
         case "t": self = .title
         case "y": self = .year
         case "h": self = .help
+        case "p": self = .path
         default: self = .unknown
         }
     }
@@ -36,7 +38,7 @@ class Mp4SearchAndWrite {
         consoleIO.writeMessage("Argument count: \(argCount) Option: \(option) value: \(value)")
     }
     
-    func getOption(_ option:String) -> (option:OptionType, value: String) {
+    func getOption(_ option: String) -> (option: OptionType, value: String) {
         let arguments = CommandLine.arguments
         if let index = arguments.index(of: "-" + option) {
             let value = arguments[index + 1]
@@ -47,14 +49,15 @@ class Mp4SearchAndWrite {
         }
     }
     
-    func getSearchTerms() -> [String : String] {
-        var terms: Dictionary = ["title": "", "year": ""]
+    func getTerms() -> [String : String] {
+        var terms: Dictionary = ["title": "", "year": "", "path": ""]
         for argument in CommandLine.arguments {
             let (option, value) = getOption(String(argument.suffix(from: argument.index(argument.startIndex, offsetBy: 1))))
             
             switch option {
             case .title: terms["title"] = value
             case .year: terms["year"] = value
+            case .path: terms["path"] = value
             default: break
             }
         }

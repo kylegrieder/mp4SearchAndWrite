@@ -106,20 +106,24 @@ class Search {
         return movieDetails
     }
     
-    func getMoviePoster(fromPath path: String) -> NSImage? {
-        var poster: NSImage?
+    func getMoviePosterData(fromPath path: String) -> Data? {
+        var posterData: Data?
         
         consoleIO.writeMessage("Getting movie poster... ")
         
         let posterUrlString = self.buildUrlString(forType: "poster", withId: nil, orPosterPath: path)
         
         if let requestUrl = URL(string: posterUrlString) {
-            if let image = NSImage.init(contentsOf: requestUrl) {
+            do {
+                let imageData = try Data.init(contentsOf: requestUrl)
                 consoleIO.writeMessage(" Poster was successfully retrieved!")
-                poster = image
+                posterData = imageData
+            } catch {
+                consoleIO.writeMessage(" Poster was unable to be retrieved.")
+                consoleIO.writeMessage(" Poster was unable to be retrieved.", to: .error)
             }
         }
-        return poster
+        return posterData
     }
     
     private func buildUrlString(forType type:String, withId id:Int?, orPosterPath path: String?) -> String {

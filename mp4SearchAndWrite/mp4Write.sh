@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# // title, genre, releaseDate, longDesc, storeDesc, mpaaCert, stik
+# // path, title, genre, releaseDate, longDesc, storeDesc, mpaaCert, stik
+
+
 
 echo ${1}
 echo ${2}
