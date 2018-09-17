@@ -30,9 +30,7 @@ class ConsoleIO {
         
         writeMessage("usage:")
         writeMessage("\(executableName) -a string1 string2")
-        writeMessage("or")
         writeMessage("\(executableName) -p string")
-        writeMessage("or")
         writeMessage("\(executableName) -h to show usage information")
         writeMessage("Type \(executableName) without an option to enter interactive mode.")
     }

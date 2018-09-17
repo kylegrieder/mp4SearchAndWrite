@@ -31,11 +31,11 @@ class Mp4SearchAndWrite {
     let consoleIO = ConsoleIO()
     
     func staticMode() {
-        let argCount = CommandLine.argc
-        let argument = CommandLine.arguments[1]
-        let (option, value) = getOption(String(argument.suffix(from: argument.index(argument.startIndex, offsetBy: 1))))
-        
-        consoleIO.writeMessage("Argument count: \(argCount) Option: \(option) value: \(value)")
+        // outline quick explanation of parameters
+    }
+    
+    func helpMode() {
+        // implement help console messages in detail
     }
     
     func getOption(_ option: String) -> (option: OptionType, value: String) {
@@ -49,8 +49,8 @@ class Mp4SearchAndWrite {
         }
     }
     
-    func getTerms() -> [String : String] {
-        var terms: Dictionary = ["title": "", "year": "", "path": ""]
+    func getTerms() -> [String : Any] {
+        var terms: Dictionary = ["title": "", "year": "", "path": "", "help": false] as [String : Any]
         for argument in CommandLine.arguments {
             let (option, value) = getOption(String(argument.suffix(from: argument.index(argument.startIndex, offsetBy: 1))))
             
@@ -58,6 +58,7 @@ class Mp4SearchAndWrite {
             case .title: terms["title"] = value
             case .year: terms["year"] = value
             case .path: terms["path"] = value
+            case .help: terms["help"] = true
             default: break
             }
         }
