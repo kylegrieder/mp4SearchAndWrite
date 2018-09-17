@@ -25,6 +25,8 @@ func main() {
             mp4SearchAndWrite.helpMode()
         } else if (type == "movie") {
         
+            // todo: handle if -t and -y are included by checking for them and using them if they're there
+            //       we shouldnt even attempt to parse the title and year out of the path if they've been provided. 
             if let filePath = terms["path"] as? String {
                 
                 var titleString: String?
