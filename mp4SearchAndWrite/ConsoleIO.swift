@@ -24,14 +24,29 @@ class ConsoleIO {
         }
     }
     
-    func printUsage() {
-        
+    func printHelp() {
         let executableName = (CommandLine.arguments[0] as NSString).lastPathComponent
         
-        writeMessage("usage:")
-        writeMessage("\(executableName) -a string1 string2")
-        writeMessage("\(executableName) -p string")
-        writeMessage("\(executableName) -h to show usage information")
-        writeMessage("Type \(executableName) without an option to enter interactive mode.")
+        writeMessage("You can include the title and year as their own parameters or, if the file\'s name is properly formatted, \(executableName) will parse it for you.")
+        writeMessage("The file format should be \"{Full Title} ({Release Year}).mp4\". See below for example.")
+        
+        writeMessage("Parameters:")
+        writeMessage("-p: Path to .mp4 File (required)")
+        writeMessage("-T: Type (i.e. - \"Movie\" or \"TV\" (required)")
+        writeMessage("-t: Movie Title")
+        writeMessage("-y: Movie year")
+        
+        writeMessage("Examples:")
+        writeMessage("\(executableName) -t \"The Avengers\" -y \"2012\" -T \"Movie\" -p \"/Users/kyle/Movies/The Avengers.mp4\"")
+        writeMessage("\(executableName) -p \"/Volumes/Media/Movies/The Avengers (2012).mp4\" -T \"Movie\"")
+    }
+    
+    func printUsage() {
+        let executableName = (CommandLine.arguments[0] as NSString).lastPathComponent
+        
+        writeMessage("******** mp4SearchAndWrite ******** \n")
+        writeMessage("\(executableName) - search for a movie using the Title and Year, \ngrab the meta data from TheMovieDB.org and write it to an .mp4 file. \nCurrently the application isn't interactive, meaning it just grabs \nthe first result from the response. \n")
+        
+        writeMessage("This is why including the year is so important. \n \nUse \'-h\' for usage and examples.")
     }
 }

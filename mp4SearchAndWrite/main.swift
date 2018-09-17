@@ -13,7 +13,6 @@ let helpers = Helpers()
 
 func main() {
     
-    consoleIO.printUsage()
     if (CommandLine.argc < 2) {
         mp4SearchAndWrite.staticMode()
     } else {
@@ -25,26 +24,32 @@ func main() {
             mp4SearchAndWrite.helpMode()
         } else if (type == "movie") {
         
-            // todo: handle if -t and -y are included by checking for them and using them if they're there
-            //       we shouldnt even attempt to parse the title and year out of the path if they've been provided. 
             if let filePath = terms["path"] as? String {
                 
                 var titleString: String?
                 var yearString: String?
                 
-                if let titleLast = filePath.split(separator: "/").last,
-                    let titleFirst = String(titleLast).split(separator: "(").first {
-                    titleString = String(titleFirst)
+                if let titleTerm = terms["title"] as? String {
+                    titleString = titleTerm
                 } else {
-                    consoleIO.writeMessage("Couldn't parse title...")
+                    if let titleLast = filePath.split(separator: "/").last,
+                        let titleFirst = String(titleLast).split(separator: "(").first {
+                        titleString = String(titleFirst)
+                    } else {
+                        consoleIO.writeMessage("Couldn't parse title...")
+                    }
                 }
                 
-                if let yearLast = filePath.split(separator: "/").last,
-                    let yearLastAgain = String(yearLast).split(separator: "(").last,
-                    let yearFirst = String(yearLastAgain).split(separator: ")").first {
-                     yearString = String(yearFirst)
+                if let yearTerm = terms["year"] as? String {
+                    yearString = yearTerm
                 } else {
-                    consoleIO.writeMessage("Couldn't parse year...")
+                    if let yearLast = filePath.split(separator: "/").last,
+                        let yearLastAgain = String(yearLast).split(separator: "(").last,
+                        let yearFirst = String(yearLastAgain).split(separator: ")").first {
+                         yearString = String(yearFirst)
+                    } else {
+                        consoleIO.writeMessage("Couldn't parse year...")
+                    }
                 }
                 
                 if let title = titleString, let year = yearString {
@@ -67,7 +72,7 @@ func main() {
                     }
                 }
             }
-        } else if (type == "tv show") {
+        } else if (type == "tv") {
             
         }
     }
