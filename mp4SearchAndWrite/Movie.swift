@@ -47,16 +47,24 @@ class Movie {
             // Genre logic
             if let genreObjects = movieDetails["genres"] as? [[String : Any]] {
                 let genres = genreObjects.compactMap { $0["name"] }
+                
                 let isActionAdventure = genres.contains {
                     if let genre = $0 as? String {
-                        if (genre == "Action" || genre == "Adventure") {
-                            return true
-                        }
+                        return (genre == "Action" || genre == "Adventure") ? true : false
                     }
                     return false
                 }
-                
-                if (isActionAdventure) {
+
+                let isFamily = genres.contains {
+                    if let genre = $0 as? String {
+                        return genre == "Animation" || genre == "Family" ? true : false
+                    }
+                    return false
+                }
+
+                if (isFamily) {
+                    self.genre = "Family"
+                } else if (isActionAdventure) {
                     self.genre = "Action & Adventure"
                 } else {
                     self.genre = genres[0] as? String
