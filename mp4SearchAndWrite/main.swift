@@ -18,9 +18,14 @@ func main() {
     } else {
         let terms = mp4SearchAndWrite.getTerms()
         let type = terms["type"] as? String
+        var help = false
+        
+        if let helpBool = terms["help"] as? Bool {
+            help = helpBool
+        }
         
         // logic paths for terms: movie, tv show, help, staic mode
-        if (terms["help"] != nil) {
+        if (help) {
             mp4SearchAndWrite.helpMode()
         } else if (type == "movie") {
         
@@ -74,6 +79,8 @@ func main() {
             }
         } else if (type == "tv") {
             
+        } else {
+            consoleIO.writeMessage("You didn't include a type. Try again and include a type. (ie. -T \"Movie\")")
         }
     }
 }
