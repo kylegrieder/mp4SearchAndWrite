@@ -65,7 +65,8 @@ class Mp4SearchAndWrite {
         var terms: Dictionary = ["title": "", "year": "", "path": "", "type": "movie", "help": false] as [String : Any]
         
         for argument in CommandLine.arguments {
-            let (option, value) = getOption(String(argument.suffix(from: argument.index(argument.startIndex, offsetBy: 1))))
+            let offset = String(argument.suffix(from: argument.index(argument.startIndex, offsetBy: 1))).prefix(1) == "-" ? 2 : 1
+            let (option, value) = getOption(String(argument.suffix(from: argument.index(argument.startIndex, offsetBy: offset))))
             
             switch option {
             case .title: terms["title"] = value
