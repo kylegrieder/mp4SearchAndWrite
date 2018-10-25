@@ -14,15 +14,20 @@ enum OptionType: String {
     case help = "h"
     case path = "p"
     case type = "T"
-    case unknown
+    case unknown = ""
     
     init(value: String) {
         switch value {
         case "t": self = .title
+        case "title": self = .title
         case "y": self = .year
+        case "year": self = .year
         case "h": self = .help
+        case "help": self = .help
         case "p": self = .path
+        case "path": self = .path
         case "T": self = .type
+        case "Type": self = .type
         default: self = .unknown
         }
     }
@@ -42,14 +47,17 @@ class Mp4SearchAndWrite {
     
     func getOption(_ option: String) -> (option: OptionType, value: String) {
         let arguments = CommandLine.arguments
-        if let index = arguments.index(of: "-" + option) {
+        
+        if (option == "h" || option == "help") {
+            return (OptionType(value:option), option)
+        } else if let index = arguments.index(of: "-" + option) {
             let value = arguments[index + 1]
-
             return (OptionType(value: option), value)
-        } else if (option == "h") {
-            return (OptionType(value: option), option)
+        } else if let index = arguments.index(of: "--" + option) {
+            let value = arguments[index + 1]
+            return (OptionType(value: option), value)
         } else {
-            return (OptionType(value: option), option)
+            return (OptionType(value:""), "")
         }
     }
     
@@ -63,7 +71,7 @@ class Mp4SearchAndWrite {
             case .title: terms["title"] = value
             case .year: terms["year"] = value
             case .path: terms["path"] = value
-            case .type: terms["type"] = value
+            case .type: terms["type"] = value.lowercased()
             case .help: terms["help"] = true
             default: break
             }
