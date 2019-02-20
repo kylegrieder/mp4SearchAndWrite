@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		800C538E214A215400001EC6 /* mp4Write.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 800C538D214A081A00001EC6 /* mp4Write.sh */; };
 		80C620D22180C985007F20F4 /* mp4SearchAndWrite in CopyFiles */ = {isa = PBXBuildFile; fileRef = 80C74CD6213F31F700D5315A /* mp4SearchAndWrite */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		80C620D42180C99F007F20F4 /* mp4SearchAndWrite in CopyFiles */ = {isa = PBXBuildFile; fileRef = 80C74CD6213F31F700D5315A /* mp4SearchAndWrite */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		80C74CDA213F31F700D5315A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C74CD9213F31F700D5315A /* main.swift */; };
@@ -36,14 +35,12 @@
 			dstSubfolderSpec = 0;
 			files = (
 				80C620D22180C985007F20F4 /* mp4SearchAndWrite in CopyFiles */,
-				800C538E214A215400001EC6 /* mp4Write.sh in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		800C538D214A081A00001EC6 /* mp4Write.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = mp4Write.sh; sourceTree = "<group>"; };
 		80C74CD6213F31F700D5315A /* mp4SearchAndWrite */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mp4SearchAndWrite; sourceTree = BUILT_PRODUCTS_DIR; };
 		80C74CD9213F31F700D5315A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		80C74CE0213F31FD00D5315A /* ConsoleIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleIO.swift; sourceTree = "<group>"; };
@@ -83,7 +80,6 @@
 		80C74CD8213F31F700D5315A /* mp4SearchAndWrite */ = {
 			isa = PBXGroup;
 			children = (
-				800C538D214A081A00001EC6 /* mp4Write.sh */,
 				80C74CE0213F31FD00D5315A /* ConsoleIO.swift */,
 				80C74CE2213F322F00D5315A /* Mp4SearchAndWrite.swift */,
 				80C74CD9213F31F700D5315A /* main.swift */,

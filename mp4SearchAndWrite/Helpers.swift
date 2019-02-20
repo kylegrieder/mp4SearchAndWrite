@@ -15,11 +15,13 @@ class Helpers {
     }
     
     public func mp4WriteScript(withArguments arguments: [String]) {
-        let path = "/usr/local/bin/mp4Write.sh"
+        
+        let script = "/usr/local/bin/atomicparsley \(arguments[0]) -W --artwork \(arguments[1]) --title \(arguments[2]) --genre \(arguments[3]) --year \(arguments[4]) --longdesc \(arguments[5]) --storedesc \(arguments[6]) --description \(arguments[6]) --contentRating \(arguments[7]) --stik \(arguments[8]) && rm -rf  \(arguments[1])"
+
         
         let task = Process()
-        task.launchPath = path
-        task.arguments = arguments
+        task.launchPath = "/bin/bash"
+        task.arguments = ["-c", script]
         
         let pipe = Pipe()
         task.standardOutput = pipe
@@ -43,6 +45,7 @@ class Helpers {
         
         task.launch()
         task.waitUntilExit()
+        
     }
     
     public func savePosterImage(fromData data:Data?, toPath path: String) {
