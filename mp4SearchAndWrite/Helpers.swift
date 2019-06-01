@@ -16,7 +16,7 @@ class Helpers {
     
     public func mp4WriteScript(withArguments arguments: [String]) {
         
-        let script = "/usr/local/bin/atomicparsley \(arguments[0]) -W --artwork \(arguments[1]) --title \(arguments[2]) --genre \(arguments[3]) --year \(arguments[4]) --longdesc \(arguments[5]) --storedesc \(arguments[6]) --description \(arguments[6]) --contentRating \(arguments[7]) --stik \(arguments[8]) && rm -rf  \(arguments[1])"
+        let script = "/usr/local/bin/atomicparsley \"\(arguments[0])\" -W --artwork \"\(arguments[1])\" --title \"\(arguments[2])\" --genre \"\(arguments[3])\" --year \"\(arguments[4])\" --longdesc \"\(arguments[5])\" --storedesc \"\(arguments[6])\" --description \"\(arguments[6])\" --contentRating \"\(arguments[7])\" --stik \"\(arguments[8])\" && rm -rf  \"\(arguments[1])\""
 
         
         let task = Process()
