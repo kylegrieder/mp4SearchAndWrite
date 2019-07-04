@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		805FC49A22A3542D00E79C71 /* TvEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805FC49922A3542C00E79C71 /* TvEpisode.swift */; };
 		80C620D22180C985007F20F4 /* mp4SearchAndWrite in CopyFiles */ = {isa = PBXBuildFile; fileRef = 80C74CD6213F31F700D5315A /* mp4SearchAndWrite */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		80C620D42180C99F007F20F4 /* mp4SearchAndWrite in CopyFiles */ = {isa = PBXBuildFile; fileRef = 80C74CD6213F31F700D5315A /* mp4SearchAndWrite */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		80C74CDA213F31F700D5315A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C74CD9213F31F700D5315A /* main.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		805FC49922A3542C00E79C71 /* TvEpisode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvEpisode.swift; sourceTree = "<group>"; };
 		80C74CD6213F31F700D5315A /* mp4SearchAndWrite */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mp4SearchAndWrite; sourceTree = BUILT_PRODUCTS_DIR; };
 		80C74CD9213F31F700D5315A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		80C74CE0213F31FD00D5315A /* ConsoleIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleIO.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				80FEA80A214B03BE00816107 /* Helpers.swift */,
 				80C74CE4213F36C100D5315A /* Search.swift */,
 				80C74CE6213F82C200D5315A /* Movie.swift */,
+				805FC49922A3542C00E79C71 /* TvEpisode.swift */,
 			);
 			path = mp4SearchAndWrite;
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 			files = (
 				80C74CDA213F31F700D5315A /* main.swift in Sources */,
 				80FEA80B214B03BE00816107 /* Helpers.swift in Sources */,
+				805FC49A22A3542D00E79C71 /* TvEpisode.swift in Sources */,
 				80C74CE5213F36C100D5315A /* Search.swift in Sources */,
 				80C74CE1213F31FD00D5315A /* ConsoleIO.swift in Sources */,
 				80C74CE3213F322F00D5315A /* Mp4SearchAndWrite.swift in Sources */,

@@ -12,15 +12,15 @@ import Cocoa
 let search = Search()
 
 class Movie {
-    var title: String?   // implemented
-    var genre: String? // implemented
-    var artworkData: Data? // implemented
-    var releaseDate: String? // implemented
-    var longDesc: String? // implemented
-    var storeDesc: String? // implemented
-    var mpaaCertification: String? // implemented    
+    var title: String?
+    var genre: String?
+    var artworkData: Data?
+    var releaseDate: String?
+    var longDesc: String?
+    var storeDesc: String?
+    var mpaaCertification: String?
     
-    let stik = "Movie" // implemented
+    let stik = "Movie"
     
     init(withTitle title: String, andYear year: String) {
         

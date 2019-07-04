@@ -40,7 +40,7 @@ func main() {
                                 let titleFirst = String(titleLast).split(separator: "(").first {
                                 title = String(titleFirst)
                             } else {
-                                consoleIO.writeMessage("Couldn't parse title...")
+                                consoleIO.writeMessage("Couldn't parse title. Make sure your format is: \"Movie Name (MovieYear) - example: The Avengers (2012)\"")
                                 exit(1)
                             }
                         }
@@ -53,7 +53,7 @@ func main() {
                                 let yearFirst = String(yearLastAgain).split(separator: ")").first {
                                  year = String(yearFirst)
                             } else {
-                                consoleIO.writeMessage("Couldn't parse year...")
+                                consoleIO.writeMessage("Couldn't parse year. Make sure your format is: \"Movie Name (MovieYear) - example: The Avengers (2012)\"")
                                 exit(1)
                             }
                         }
@@ -73,7 +73,7 @@ func main() {
                             let arguments = [filePath, artworkPath, title, genre, releaseDate, longDesc, storeDesc, mpaaCert, movie.stik]
                             helpers.mp4WriteScript(withArguments: arguments)
                         } else {
-                            consoleIO.writeMessage("You're missing something...")
+                            consoleIO.writeMessage("The Movie DB failed to return some of the information for the movie you entered. Make sure the title and year are correct and try again.")
                             exit(1)
                         }
                     } else {
