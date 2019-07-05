@@ -10,16 +10,19 @@ import Foundation
 
 enum OptionType: String {
     case title = "t"
+    case signature = "s"
     case year = "y"
     case help = "h"
     case path = "p"
     case type = "T"
     case unknown = ""
-    
+
     init(value: String) {
         switch value {
         case "t": self = .title
         case "title": self = .title
+        case "s": self = .signature
+        case "signature": self = .signature
         case "y": self = .year
         case "year": self = .year
         case "h": self = .help
@@ -34,22 +37,22 @@ enum OptionType: String {
 }
 
 class Mp4SearchAndWrite {
-    
+
     let consoleIO = ConsoleIO()
-    
+
     func staticMode() {
         consoleIO.printUsage()
     }
-    
+
     func helpMode() {
         consoleIO.printHelp()
     }
-    
+
     func getOption(_ option: String) -> (option: OptionType, value: String) {
         let arguments = CommandLine.arguments
-        
+
         if (option == "h" || option == "help") {
-            return (OptionType(value:option), option)
+            return (OptionType(value: option), option)
         } else if let index = arguments.index(of: "-" + option) {
             let value = arguments[index + 1]
             return (OptionType(value: option), value)
@@ -57,19 +60,20 @@ class Mp4SearchAndWrite {
             let value = arguments[index + 1]
             return (OptionType(value: option), value)
         } else {
-            return (OptionType(value:""), "")
+            return (OptionType(value: ""), "")
         }
     }
-    
-    func getTerms() -> [String : Any] {
-        var terms: Dictionary = ["title": "", "year": "", "path": "", "type": "", "help": false] as [String : Any]
-        
+
+    func getTerms() -> [String: Any] {
+        var terms: Dictionary = ["title": "", "year": "", "signature": "", "path": "", "type": "", "help": false] as [String: Any]
+
         for argument in CommandLine.arguments {
             let offset = String(argument.suffix(from: argument.index(argument.startIndex, offsetBy: 1))).prefix(1) == "-" ? 2 : 1
             let (option, value) = getOption(String(argument.suffix(from: argument.index(argument.startIndex, offsetBy: offset))))
-            
+
             switch option {
             case .title: terms["title"] = value
+            case .signature: terms["signature"] = value
             case .year: terms["year"] = value
             case .path: terms["path"] = value
             case .type: terms["type"] = value.lowercased()

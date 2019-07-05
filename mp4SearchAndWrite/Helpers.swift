@@ -14,9 +14,15 @@ class Helpers {
         
     }
     
-    public func mp4WriteScript(withArguments arguments: [String]) {
+    public func mp4WriteScript(withArguments arguments: [String], type: String) {
         
-        let script = "/usr/local/bin/atomicparsley \"\(arguments[0])\" -W --artwork \"\(arguments[1])\" --title \"\(arguments[2])\" --genre \"\(arguments[3])\" --year \"\(arguments[4])\" --longdesc \"\(arguments[5])\" --storedesc \"\(arguments[6])\" --description \"\(arguments[6])\" --contentRating \"\(arguments[7])\" --stik \"\(arguments[8])\" && rm -rf  \"\(arguments[1])\""
+        var script: String
+        
+        if (type == "tv show") {
+            script = "/usr/local/bin/atomicparsley \"\(arguments[0])\" -W --artwork \"\(arguments[1])\" --title \"\(arguments[2])\" --genre \"\(arguments[3])\" --year \"\(arguments[4])\" --longdesc \"\(arguments[5])\" --storedesc \"\(arguments[6])\" --description \"\(arguments[6])\" --stik \"\(arguments[8])\" && rm -rf  \"\(arguments[1])\""
+        } else {
+            script = "/usr/local/bin/atomicparsley \"\(arguments[0])\" -W --artwork \"\(arguments[1])\" --title \"\(arguments[2])\" --genre \"\(arguments[3])\" --year \"\(arguments[4])\" --longdesc \"\(arguments[5])\" --storedesc \"\(arguments[6])\" --description \"\(arguments[6])\" --contentRating \"\(arguments[7])\" --stik \"\(arguments[8])\" && rm -rf  \"\(arguments[1])\""
+        }
 
         
         let task = Process()
@@ -50,5 +56,27 @@ class Helpers {
     
     public func savePosterImage(fromData data:Data?, toPath path: String) {
         let _ = FileManager.default.createFile(atPath: path, contents: data, attributes: nil)
+    }
+    
+    public func processGenres(genres: [String]) -> String {
+        var genre: String
+        
+        let isActionAdventure = genres.contains {
+            return ($0 == "Action" || $0 == "Adventure")
+        }
+        
+        let isFamily = genres.contains {
+            return ($0 == "Animation" || $0 == "Family")
+        }
+        
+        if (isFamily) {
+            genre = "Family"
+        } else if (isActionAdventure) {
+            genre = "Action & Adventure"
+        } else {
+            genre = genres[0]
+        }
+        
+        return genre
     }
 }

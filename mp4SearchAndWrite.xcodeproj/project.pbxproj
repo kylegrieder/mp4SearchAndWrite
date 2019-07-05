@@ -126,6 +126,7 @@
 				TargetAttributes = {
 					80C74CD5213F31F700D5315A = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -284,7 +285,7 @@
 				DEVELOPMENT_TEAM = 4GG4434UG2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -295,7 +296,7 @@
 				DEVELOPMENT_TEAM = 4GG4434UG2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
