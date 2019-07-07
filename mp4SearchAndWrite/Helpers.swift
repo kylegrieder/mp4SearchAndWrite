@@ -19,9 +19,16 @@ class Helpers {
         var script: String
         
         if (type == "tv show") {
-            script = "/usr/local/bin/atomicparsley \"\(arguments[0])\" -W --artwork \"\(arguments[1])\" --title \"\(arguments[2])\" --genre \"\(arguments[3])\" --year \"\(arguments[4])\" --longdesc \"\(arguments[5])\" --storedesc \"\(arguments[6])\" --description \"\(arguments[6])\" --stik \"\(arguments[8])\" && rm -rf  \"\(arguments[1])\""
-        } else {
+            let episodeNumber = String(arguments[9]).count == 1 ? "0\(arguments[9])" : "\(arguments[9])"
+            let seasonNumber = String(arguments[10]).count == 1 ? "0\(arguments[10])" : "\(arguments[10])"
+            
+            script = "/usr/local/bin/atomicparsley \"\(arguments[0])\" -W --artwork \"\(arguments[1])\" --title \"\(arguments[2])\" --genre \"\(arguments[3])\" --year \"\(arguments[4])\" --longdesc \"\(arguments[5])\" --storedesc \"\(arguments[6])\" --description \"\(arguments[6])\" --stik \"\(arguments[7])\" --TVShowName \"\(arguments[8])\" --TVEpisodeNum \"\(episodeNumber)\" --TVSeasonNum \"\(seasonNumber)\" --TVEpisode \"S\(seasonNumber)E\(episodeNumber)\" && rm -rf  \"\(arguments[1])\""
+        } else if (type == "movie") {
             script = "/usr/local/bin/atomicparsley \"\(arguments[0])\" -W --artwork \"\(arguments[1])\" --title \"\(arguments[2])\" --genre \"\(arguments[3])\" --year \"\(arguments[4])\" --longdesc \"\(arguments[5])\" --storedesc \"\(arguments[6])\" --description \"\(arguments[6])\" --contentRating \"\(arguments[7])\" --stik \"\(arguments[8])\" && rm -rf  \"\(arguments[1])\""
+        } else {
+            script = ""
+            consoleIO.writeMessage("Failed to set script type")
+            exit(1)
         }
 
         
@@ -39,7 +46,7 @@ class Helpers {
                 fflush(stdout)
                 sleep(UInt32(0.01))
             } else {
-                consoleIO.writeMessage("Error decoding data: \(outputHandle.availableData)")
+                consoleIO.writeMessage("Error decoding data: \(outputHandle.availableData)", to: .error)
             }
         }
         

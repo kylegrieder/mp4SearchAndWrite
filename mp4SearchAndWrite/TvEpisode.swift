@@ -11,6 +11,7 @@ import Cocoa
 
 class TvEpisode {
     var title: String?
+    var show: String?
     var genre: String?
     var artworkData: Data?
     var airDate: String?
@@ -22,43 +23,41 @@ class TvEpisode {
     let stik = "TV Show"
 
     init(withTitle title: String, season: String, episode: String) {
-
-//        if let showId = search.searchForTvShowId(withShow: show) {
-//
-//        }
         
         if let showDetails = search.searchForTvShowDetails(withTitle: title),
-            let tvEpisodeDetails = search.getTvEpisodeDetails(withId: String(showDetails["id"]), season: season, episode: episode),
-            let posterPath = showDetails["poster_path"] as? String,
+            let showId = showDetails["id"] as? Int,
+            let tvShowGenres = search.getTvShowGenres(withId: showId),
+            let tvEpisodeDetails = search.getTvEpisodeDetails(withId: showId, season: season, episode: episode),
+            let posterPath = showDetails["posterPath"] as? String,
             // Artwork Logic
             let showPosterData = search.getPosterData(fromPath: posterPath) {
-            self.artworkData = showPosterData
-            // Details logic
-            consoleIO.writeMessage("Setting show details...")
-            if let tvEpisodeTitle = tvEpisodeDetails["name"] as? String,
-                let tvEpisodeAirDate = tvEpisodeDetails["air_date"] as? String,
-                let tvEpisodeLongDesc = tvEpisodeDetails["overview"] as? String,
-                let tvEpisodeStoreDesc = tvEpisodeDetails["overview"] as? String,
-                let tvEpisodeNumber = tvEpisodeDetails["episode_number"] as? Int,
-                let tvEpisodeSeasonNumber = tvEpisodeDetails["season_number"] as? Int {
-                    self.title = tvEpisodeTitle
-                    self.releaseDate = tvEpisodeAirDate
-                    self.longDesc = tvEpisodeLongDesc
-                    self.storeDesc = tvEpisodeStoreDesc
-                    self.episodeNumber = tvEpisodeNumber
-                    self.seasonNumber = tvEpisodeSeasonNumber
-            } else {
-                consoleIO.writeMessage("Unable to set details.")
-            }
-            // Genre logic
-            if let genreObjects = showDetails["genres"] as? [[String: Any]] {
-                let genres = genreObjects.compactMap {
+                self.artworkData = showPosterData
+                // Details logic
+                consoleIO.writeMessage("Setting show details...", to: .log)
+                if let tvEpisodeTitle = tvEpisodeDetails["name"] as? String,
+                    let tvEpisodeShowName = showDetails["name"] as? String,
+                    let tvEpisodeAirDate = tvEpisodeDetails["air_date"] as? String,
+                    let tvEpisodeLongDesc = tvEpisodeDetails["overview"] as? String,
+                    let tvEpisodeStoreDesc = tvEpisodeDetails["overview"] as? String,
+                    let tvEpisodeNumber = tvEpisodeDetails["episode_number"] as? Int,
+                    let tvEpisodeSeasonNumber = tvEpisodeDetails["season_number"] as? Int {
+                        self.title = tvEpisodeTitle
+                        self.show = tvEpisodeShowName
+                        self.airDate = tvEpisodeAirDate
+                        self.longDesc = tvEpisodeLongDesc
+                        self.storeDesc = tvEpisodeStoreDesc
+                        self.episodeNumber = tvEpisodeNumber
+                        self.seasonNumber = tvEpisodeSeasonNumber
+                } else {
+                    consoleIO.writeMessage("Unable to set details.")
+                }
+                // Genre logic
+                let genres = tvShowGenres.compactMap {
                     $0["name"] as? String
                 }
-                
+            
                 self.genre = helpers.processGenres(genres: genres)
             }
-        }
     }
 
 }

@@ -13,16 +13,19 @@ class ConsoleIO {
     enum OutputType {
         case error
         case help
+        case log
         case standard
     }
     
     func writeMessage(_ message: String, to: OutputType = .standard) {
         switch to {
-        case .standard:
-            print("\(message) \r", terminator: "")
         case .error:
             fputs("Error: \(message)\n", stderr)
         case .help:
+            print("\(message)")
+        case .log:
+            print("\(message) \r", terminator: "")
+        case .standard:
             print("\(message)")
         }
     }

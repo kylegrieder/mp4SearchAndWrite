@@ -29,7 +29,7 @@ class Movie {
            let moviePosterData = search.getPosterData(fromPath: posterPath) {
             self.artworkData = moviePosterData
             // Details logic
-            consoleIO.writeMessage("Setting movie details...")
+            consoleIO.writeMessage("Setting movie details...", to: .log)
             if let movieTitle = movieDetails["title"] as? String,
                let movieReleaseDate = movieDetails["release_date"] as? String,
                let movieLongDesc = movieDetails["overview"] as? String,

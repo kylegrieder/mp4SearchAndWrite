@@ -15,6 +15,8 @@ enum OptionType: String {
     case help = "h"
     case path = "p"
     case type = "T"
+    case tvShow = "tv show"
+    case movie = "movie"
     case unknown = ""
 
     init(value: String) {
@@ -30,7 +32,10 @@ enum OptionType: String {
         case "p": self = .path
         case "path": self = .path
         case "T": self = .type
-        case "Type": self = .type
+        case "type": self = .type
+        case "tv-show": self = .tvShow
+        case "tv": self = .tvShow
+        case "movie": self = .movie
         default: self = .unknown
         }
     }
@@ -57,7 +62,15 @@ class Mp4SearchAndWrite {
             let value = arguments[index + 1]
             return (OptionType(value: option), value)
         } else if let index = arguments.index(of: "--" + option) {
-            let value = arguments[index + 1]
+            var value: String
+            if (option == "tv-show" || option == "tv") {
+                return (OptionType(value: "type"), "tv show")
+            } else if (option == "movie") {
+                return (OptionType(value: "type"), "movie")
+            } else {
+                value = arguments[index + 1]
+            }
+            
             return (OptionType(value: option), value)
         } else {
             return (OptionType(value: ""), "")
@@ -70,17 +83,44 @@ class Mp4SearchAndWrite {
         for argument in CommandLine.arguments {
             let offset = String(argument.suffix(from: argument.index(argument.startIndex, offsetBy: 1))).prefix(1) == "-" ? 2 : 1
             let (option, value) = getOption(String(argument.suffix(from: argument.index(argument.startIndex, offsetBy: offset))))
-
-            switch option {
-            case .title: terms["title"] = value
-            case .signature: terms["signature"] = value
-            case .year: terms["year"] = value
-            case .path: terms["path"] = value
-            case .type: terms["type"] = value.lowercased()
-            case .help: terms["help"] = true
-            default: break
+            
+            if (option == .tvShow || option == .movie) {
+                terms["type"] = option
+            } else {
+                switch option {
+                case .title: terms["title"] = value
+                case .signature: terms["signature"] = value
+                case .year: terms["year"] = value
+                case .path: terms["path"] = getAbsolutePath(path: value)
+                case .type: terms["type"] = value.lowercased()
+                case .help: terms["help"] = true
+                default: break
+                }
             }
         }
         return terms
+    }
+    
+    func getAbsolutePath(path: String) -> String {
+        var absolutePath = path
+        let fileName = path.split(separator: "/").last
+        
+        if let fileNameSubstring = fileName {
+            let fileNameString = String(fileNameSubstring)
+        
+            if (path.hasPrefix("~")) {
+                // get home directory
+                let home = FileManager.default.homeDirectoryForCurrentUser.relativePath
+                if let relPath = path.split(separator: "~").last {
+                    absolutePath = home + relPath
+                }
+            } else if (!path.hasPrefix("/")) {
+                //get current working directory
+                let cwd = FileManager.default.currentDirectoryPath
+                    
+                absolutePath = cwd + "/" + fileNameString
+            }
+        }
+        return absolutePath
     }
 }

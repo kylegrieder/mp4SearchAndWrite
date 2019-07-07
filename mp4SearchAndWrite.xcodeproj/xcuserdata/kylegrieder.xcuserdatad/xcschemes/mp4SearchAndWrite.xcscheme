@@ -63,16 +63,24 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-p &quot;/Users/kylegrieder/Downloads/Cars 3 (2017).mp4&quot;"
+            argument = "-p &quot;/Users/kylegrieder/Downloads/Avatar (S03E01).mp4&quot;"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-p &quot;~/Downloads/Avatar (S03E01).mp4&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-T"
+            argument = "-p &quot;Avatar (S03E01).mp4&quot;"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--tv-show"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "Movie"
-            isEnabled = "YES">
+            argument = "--movie"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

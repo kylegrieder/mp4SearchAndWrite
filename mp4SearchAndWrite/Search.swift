@@ -37,18 +37,18 @@ class Search {
         if let queryString = encodedQueryString,
            let requestUrl = URL(string: initialUrlString + "&year=" + year + "&query=" + queryString) {
             if !queryString.isEmpty {
-                consoleIO.writeMessage("Starting search...")
+                consoleIO.writeMessage("Starting search...", to: .log)
                 let session = URLSession.shared.dataTask(with: requestUrl) { (movieData, response, error) in
                     if error != nil {
                         consoleIO.writeMessage("Error: Your search was unable to be processed. Try again.")
                         consoleIO.writeMessage("Error: URLSession dataTask returned an error: \(String(describing: error))", to: .error)
                     } else {
-                        consoleIO.writeMessage("Your search was successful!")
+                        consoleIO.writeMessage("Your search was successful!", to: .log)
                         if let data = movieData {
                             do {
                                 consoleIO.writeMessage("Parsing search results...")
                                 if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
-                                    consoleIO.writeMessage("Search results were parsed successfully.")
+                                    consoleIO.writeMessage("Search results were parsed successfully.", to: .log)
                                     let results = json["results"] as! [[String: Any]?]
                                     if let firstResult = results[0], let id = firstResult["id"] as? Int {
                                         movieId = id
@@ -79,19 +79,19 @@ class Search {
         var movieDetails: [String: Any]?
 
         let requestUrlString = self.buildMovieDetailsUrlString(id: id)
-        consoleIO.writeMessage("Getting Movie details...")
+        consoleIO.writeMessage("Getting Movie details...", to: .log)
         if let requestUrl = URL(string: requestUrlString) {
             let session = URLSession.shared.dataTask(with: requestUrl) { (movieDetailsData, response, error) in
                 if error != nil {
                     consoleIO.writeMessage("Error: Movie Details weren't able to be retrieved")
                     consoleIO.writeMessage("Error: URLSession dataTask returned an error: \(String(describing: error))", to: .error)
                 } else {
-                    consoleIO.writeMessage("Movie details data was successfully retrieved!")
+                    consoleIO.writeMessage("Movie details data was successfully retrieved!", to: .log)
                     if let data = movieDetailsData {
                         do {
-                            consoleIO.writeMessage("Parsing details...")
+                            consoleIO.writeMessage("Parsing details...", to: .log)
                             if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
-                                consoleIO.writeMessage("Movie details were parsed successfully.")
+                                consoleIO.writeMessage("Movie details were parsed successfully.", to: .log)
                                 movieDetails = json
                             }
                         } catch {
@@ -110,8 +110,8 @@ class Search {
     
     func searchForTvShowDetails(withTitle title: String) -> [String: Any]? {
         var tvShowId: Int?
+        var tvShowName: String?
         var tvShowPosterPath: String?
-        var tvShowGenres: [String] = []
         
         let initialUrlString = self.buildTvSearchUrlString()
         let encodedQueryString = title.addingPercentEncoding(withAllowedCharacters: .urlPasswordAllowed)
@@ -119,32 +119,32 @@ class Search {
         if let queryString = encodedQueryString,
             let requestUrl = URL(string: initialUrlString + "&query=" + queryString) {
             if !queryString.isEmpty {
-                consoleIO.writeMessage("Starting search...")
+                consoleIO.writeMessage("Starting search...", to: .log)
                 let session = URLSession.shared.dataTask(with: requestUrl) { (tvShowData, response, error) in
                     if error != nil {
                         consoleIO.writeMessage("Error: Your search was unable to be processed. Try again.")
                         consoleIO.writeMessage("Error: URLSession dataTask returned an error: \(String(describing: error))", to: .error)
                     } else {
-                        consoleIO.writeMessage("Your search was successful!")
+                        consoleIO.writeMessage("Your search was successful!", to: .log)
                         if let data = tvShowData {
                             do {
-                                consoleIO.writeMessage("Parsing search results...")
+                                consoleIO.writeMessage("Parsing search results...", to: .log)
                                 if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
-                                    consoleIO.writeMessage("Search results were parsed successfully.")
+                                    consoleIO.writeMessage("Search results were parsed successfully.", to: .log)
                                     let results = json["results"] as! [[String: Any]?]
                                     if let firstResult = results[0],
                                         let id = firstResult["id"] as? Int,
-                                        let posterPath = firstResult["poster_path"] as? String,
-                                        let genreObjects = firstResult["genres"] {
+                                        let name = firstResult["name"] as? String,
+                                        let posterPath = firstResult["poster_path"] as? String {
                                             tvShowId = id
+                                            tvShowName = name
                                             tvShowPosterPath = posterPath
-                                            tvShowGenres = genreObjects
                                     } else {
-                                        consoleIO.writeMessage("Error: Your search did not return any results.\n Make sure the year and title parameters are accurate.")
+                                        consoleIO.writeMessage("Error: Your search did not return any results.\n Make sure the year and title parameters are accurate.", to: .error)
                                     }
                                 }
                             } catch {
-                                consoleIO.writeMessage("Error: Search results were unable to be parsed successfully. \n Please Try again")
+                                consoleIO.writeMessage("Error: Search results were unable to be parsed successfully. \n Please Try again", to: .error)
                             }
                         }
                     }
@@ -159,21 +159,86 @@ class Search {
                 consoleIO.writeMessage("Error: No query string", to: .error)
             }
         }
-        let tvShowDetails: Dictionary = ["id": tvShowId, "posterPath": tvShowPosterPath, "genres": tvShowGenres] as [String: Any]
+        let tvShowDetails: Dictionary = ["id": tvShowId!, "name": tvShowName!, "posterPath": tvShowPosterPath!] as [String: Any]
         return tvShowDetails
+    }
+    
+    func getTvEpisodeDetails(withId id: Int, season: String, episode: String) -> [String: Any]? {
+        var tvEpisodeDetails: [String: Any]?
+        
+        let requestUrlString = self.buildTvEpisodeDetailsUrlString(id: id, season: season, episode: episode)
+        consoleIO.writeMessage("Getting TV Episode details...", to: .log)
+        if let requestUrl = URL(string: requestUrlString) {
+            let session = URLSession.shared.dataTask(with: requestUrl) { (tvShowDetailsData, response, error) in
+                if error != nil {
+                    consoleIO.writeMessage("Error: TV Episode Details weren't able to be retrieved", to: .error)
+                    consoleIO.writeMessage("Error: URLSession dataTask returned an error: \(String(describing: error))", to: .error)
+                } else {
+                    consoleIO.writeMessage("TV Episode details data was successfully retrieved!", to: .log)
+                    if let data = tvShowDetailsData {
+                        do {
+                            consoleIO.writeMessage("Parsing details...")
+                            if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
+                                consoleIO.writeMessage("TV Episode details were parsed successfully.", to: .log)
+                                tvEpisodeDetails = json
+                            }
+                        } catch {
+                            consoleIO.writeMessage("Error: TV Episode details were unable to be parsed successfully. \n Please Try again", to: .error)
+                        }
+                    }
+                }
+                sema.signal()
+            }
+            
+            session.resume()
+            sema.wait()
+        }
+        return tvEpisodeDetails
+    }
+    
+    func getTvShowGenres(withId id: Int) -> [[String: Any]]? {
+        var tvShowGenres: [[String: Any]]?
+        
+        let requestUrlString = self.buildTvShowGenresUrlString(id: id)
+        if let requestUrl = URL(string: requestUrlString) {
+            let session = URLSession.shared.dataTask(with: requestUrl) { (tvShowData, response, error) in
+                if error != nil {
+                    consoleIO.writeMessage("Error: TV Episode Details weren't able to be retrieved")
+                    consoleIO.writeMessage("Error: URLSession dataTask returned an error: \(String(describing: error))", to: .error)
+                } else {
+                    consoleIO.writeMessage("TV genre details data was successfully retrieved!", to: .log)
+                    if let data = tvShowData {
+                        do {
+                            consoleIO.writeMessage("Parsing details...", to: .log)
+                            if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
+                                consoleIO.writeMessage("TV genre details were parsed successfully.", to: .log)
+                                tvShowGenres = json["genres"] as? [[String: Any]]
+                            }
+                        } catch {
+                            consoleIO.writeMessage("Error: TV Episode details were unable to be parsed successfully. \n Please Try again", to: .error)
+                        }
+                    }
+                }
+                sema.signal()
+            }
+            
+            session.resume()
+            sema.wait()
+        }
+        return tvShowGenres
     }
 
     func getPosterData(fromPath path: String) -> Data? {
         var posterData: Data?
 
-        consoleIO.writeMessage("Getting movie poster... ")
+        consoleIO.writeMessage("Getting movie poster... ", to: .log)
 
         let posterUrlString = self.buildPosterUrlString(withPath: path)
 
         if let requestUrl = URL(string: posterUrlString) {
             do {
                 let imageData = try Data.init(contentsOf: requestUrl)
-                consoleIO.writeMessage("Poster was successfully retrieved!")
+                consoleIO.writeMessage("Poster was successfully retrieved!", to: .log)
                 posterData = imageData
             } catch {
                 consoleIO.writeMessage("Poster was unable to be retrieved.")
@@ -197,6 +262,10 @@ class Search {
     
     private func buildTvSearchUrlString() -> String {
         return baseURL + tvSearchURL + apiKey + urlOptionsLanguage + urlOptionsPage
+    }
+    
+    private func buildTvShowGenresUrlString(id: Int) -> String {
+        return baseURL + tvEpisodeDetailsURL + String(id) + apiKey + urlOptionsLanguage
     }
 
     private func buildPosterUrlString(withPath path: String) -> String {
