@@ -50,8 +50,10 @@ class Search {
                                 if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
                                     consoleIO.writeMessage("Search results were parsed successfully.", to: .log)
                                     let results = json["results"] as! [[String: Any]?]
-                                    if let firstResult = results[0], let id = firstResult["id"] as? Int {
-                                        movieId = id
+                                    if results.count > 0 {
+                                        if let firstResult = results[0], let id = firstResult["id"] as? Int {
+                                            movieId = id
+                                        }
                                     } else {
                                         consoleIO.writeMessage("Error: Your search did not return any results.\n Make sure the year and title parameters are accurate.")
                                     }
@@ -132,13 +134,15 @@ class Search {
                                 if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
                                     consoleIO.writeMessage("Search results were parsed successfully.", to: .log)
                                     let results = json["results"] as! [[String: Any]?]
-                                    if let firstResult = results[0],
-                                        let id = firstResult["id"] as? Int,
-                                        let name = firstResult["name"] as? String,
-                                        let posterPath = firstResult["poster_path"] as? String {
-                                            tvShowId = id
-                                            tvShowName = name
-                                            tvShowPosterPath = posterPath
+                                    if results.count > 0 {
+                                        if let firstResult = results[0],
+                                            let id = firstResult["id"] as? Int,
+                                            let name = firstResult["name"] as? String,
+                                            let posterPath = firstResult["poster_path"] as? String {
+                                                tvShowId = id
+                                                tvShowName = name
+                                                tvShowPosterPath = posterPath
+                                        }
                                     } else {
                                         consoleIO.writeMessage("Error: Your search did not return any results.\n Make sure the year and title parameters are accurate.", to: .error)
                                     }
