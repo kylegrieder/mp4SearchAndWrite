@@ -281,6 +281,7 @@
 		80C74CDF213F31F700D5315A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4GG4434UG2;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
